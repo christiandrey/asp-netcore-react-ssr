@@ -69,10 +69,10 @@ tasks.set(
     new Promise(resolve => {
       const environments = ["Production", "Development"];
       let count = environments.length;
-      const source = require("./server/appsettings.json");
+      const source = require("./appsettings.json");
       delete source.Logging;
       environments.forEach(env => {
-        const filename = path.resolve(__dirname, `./server/appsettings.${env}.json`);
+        const filename = path.resolve(__dirname, `./appsettings.${env}.json`);
         try {
           fs.writeFileSync(filename, JSON.stringify(source, null, "  "), { flag: "wx" });
         } catch (err) {}
@@ -94,8 +94,8 @@ tasks.set("build", () => {
         new Promise((resolve, reject) => {
           const options = { stdio: ["ignore", "inherit", "inherit"] };
           const config = global.DEBUG ? "Debug" : "Release";
-          let args = ["publish", "server", "-o", "../build", "-c", config];
-          if (global.DEBUG) args = ["build", "server", "-c", config];
+          let args = ["publish", "server.csproj", "-o", "build", "-c", config];
+          if (global.DEBUG) args = ["build", "server.csproj", "-c", config];
           cp.spawn("dotnet", args, options).on("close", code => {
             if (code === 0) {
               resolve();
@@ -213,11 +213,11 @@ tasks.set("start", () => {
             // Launch ASP.NET Core server after the initial bundling is complete
             if (++count === 1) {
               const options = {
-                cwd: path.resolve(__dirname, "./server/"),
+                cwd: path.resolve(__dirname, "./"),
                 stdio: ["ignore", "pipe", "inherit"],
                 env: Object.assign({}, process.env, {
                   ASPNETCORE_ENVIRONMENT: "Development",
-                  NODE_PATH: "../node_modules/"
+                  NODE_PATH: "node_modules/"
                 })
               };
               cp.spawn("dotnet", ["watch", "run"], options).stdout.on("data", data => {
