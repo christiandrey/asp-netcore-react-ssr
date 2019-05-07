@@ -32,13 +32,13 @@ const config = isDebug => {
             //     plugins: ["react-hot-loader/babel"]
             //   }
             // },
-            // "awesome-typescript-loader?silent=true" // (or awesome-typescript-loader)
-            {
-              loader: "ts-loader",
-              options: {
-                transpileOnly: true
-              }
-            }
+            "awesome-typescript-loader?silent=true" // (or awesome-typescript-loader)
+            // {
+            //   loader: "ts-loader",
+            //   options: {
+            //     transpileOnly: true
+            //   }
+            // }
           ]
         },
         {

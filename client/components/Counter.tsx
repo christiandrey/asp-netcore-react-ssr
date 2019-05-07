@@ -1,31 +1,39 @@
-import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as CounterStore from '../store/Counter';
-import * as WeatherForecasts from '../store/WeatherForecasts';
+import * as React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
-type CounterProps =
-    CounterStore.CounterState
-    & typeof CounterStore.actionCreators
-    & RouteComponentProps<{}>;
+type CounterProps = RouteComponentProps<{}>;
 
-class Counter extends React.Component<CounterProps, {}> {
-    public render() {
-        return <div>
-            <h1>Counter</h1>
+type CounterState = {
+  counter: number;
+};
 
-            <p>This is a simple example of a React component.</p>
+export default class Counter extends React.Component<CounterProps, CounterState> {
+  /**
+   *
+   */
+  constructor(props: Readonly<CounterProps>) {
+    super(props);
 
-            <p>Current count: <strong>{ this.props.count }</strong></p>
+    this.state = { counter: 0 } as CounterState;
+  }
 
-            <button onClick={ () => { this.props.increment() } }>Increment</button>
-        </div>;
-    }
+  increment = () => {
+    this.setState({ counter: this.state.counter + 1 });
+  };
+
+  public render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+
+        <p>This is a simple example of a React component.</p>
+
+        <p>
+          Current count: <strong>{this.state.counter}</strong>
+        </p>
+
+        <button onClick={this.increment}>Increment</button>
+      </div>
+    );
+  }
 }
-
-// Wire up the React component to the Redux store
-export default connect(
-    (state: ApplicationState) => state.counter, // Selects which state properties are merged into the component's props
-    CounterStore.actionCreators                 // Selects which action creators are merged into the component's props
-)(Counter);

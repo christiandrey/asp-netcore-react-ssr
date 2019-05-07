@@ -18,20 +18,7 @@ const config = isDebug => {
       rules: [{ test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: "url-loader?limit=100000" }]
     },
     entry: {
-      vendor: [
-        "bootstrap",
-        "bootstrap/dist/css/bootstrap.css",
-        "domain-task",
-        "event-source-polyfill",
-        "history",
-        "react",
-        "react-dom",
-        "react-router-dom",
-        "react-redux",
-        "redux",
-        "redux-thunk",
-        "react-router-redux"
-      ]
+      vendor: ["bootstrap", "bootstrap/dist/css/bootstrap.css", "domain-task", "event-source-polyfill", "react", "react-dom", "react-router-dom"]
     },
     output: {
       publicPath: "dist/",
